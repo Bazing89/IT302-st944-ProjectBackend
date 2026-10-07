@@ -1,0 +1,48 @@
+{
+  "info": {
+    "_postman_id": "9e1af855-f0cc-4cda-a7b0-0dfac57d76fb",
+    "name": "IT-302 Phase 2 - st944 Observations API",
+    "description": "Sahith Thopucherla | st944@njit.edu | IT-302 Section 451 | Phase 2 | October 6, 2026",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5000/api/v1/st944/observations"
+    }
+  ],
+  "item": [
+    {
+      "name": "Get all observations",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}"
+      }
+    },
+    {
+      "name": "Get paginated observations",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}?itemsPerPage=10&pageNumber=1"
+      }
+    },
+    {
+      "name": "Filter by species name",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}?name=owl"
+      }
+    },
+    {
+      "name": "Use all filters",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}?itemsPerPage=10&pageNumber=0&name=bird&qualityGrade=research"
+      }
+    }
+  ]
+}

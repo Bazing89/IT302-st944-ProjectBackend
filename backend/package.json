@@ -1,0 +1,22 @@
+{
+  "name": "it302-st944-project-backend",
+  "version": "2.0.0",
+  "description": "IT-302 Phase 2 REST API for iNaturalist observations stored in MongoDB",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js",
+    "check": "node --check index.js && node --check server.js && node --check api/observations.route.js && node --check api/observations.controller.js && node --check dao/observationsDAO.js",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.6",
+    "express": "^5.2.1",
+    "mongodb": "^7.7.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

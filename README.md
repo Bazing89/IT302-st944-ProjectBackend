@@ -1,33 +1,31 @@
-# IT-302 Phase 1 MongoDB Assignment
+# IT302-st944-ProjectBackend
 
-- Student: Sahith Thopucherla
-- UCID: st944
-- Email: st944@njit.edu
-- Course: IT-302 Advanced Internet Applications
-- Section: 451
-- Assignment: Phase 1 MongoDB Assignment
-- Date: September 21, 2026
+- **Student:** Sahith Thopucherla
+- **UCID:** st944
+- **Email:** st944@njit.edu
+- **Course:** IT-302 Advanced Internet Applications
+- **Section:** 451
 
-## API selection
+## Phase 1 — MongoDB dataset
 
-This project uses the public iNaturalist Observations API to collect 25 recent,
-research-grade observations that include photos.
+This project uses the public iNaturalist Observations API to collect 25 recent, research-grade observations that include photos.
 
 - API documentation: https://api.inaturalist.org/v1/docs/
 - Endpoint: https://api.inaturalist.org/v1/observations?photos=true&quality_grade=research&per_page=25&order=desc&order_by=created_at
-
-## MongoDB
-
 - Database: `it302`
 - Collection: `observations_st944`
 - Export: `database-export/observations_st944.json`
 
-Each document contains a unique observation ID and record name, species details,
-location information, an image URL, the public observation URL, observer details,
-and a MongoDB date value in `lastUpdated`.
+Run `node scripts/prepare-data.mjs` to request the latest 25 matching observations and create the MongoDB Extended JSON import file.
 
-## Rebuild the import file
+## Phase 2 — Node.js backend
 
-Run `node scripts/prepare-data.mjs`. The script requests the latest 25 matching
-observations and writes MongoDB Extended JSON to
-`database-export/observations_st944-import.json`.
+The MVC-style Node.js, Express, and MongoDB application is in the [`backend`](backend) folder. It reads the Phase 1 collection and provides pagination and text filtering through:
+
+```text
+GET /api/v1/st944/observations
+```
+
+Setup, environment variables, Postman URLs, and verification commands are documented in [`backend/README.md`](backend/README.md).
+
+The real `backend/.env` file is intentionally excluded from Git because a MongoDB Atlas connection string may contain credentials. Copy `backend/.env.example` to `backend/.env` and enter the Phase 1 connection string locally.
