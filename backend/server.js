@@ -1,8 +1,8 @@
 /**
  * Author: Sahith Thopucherla (st944@njit.edu)
- * Date: October 6, 2026
- * Course: IT-302, Section 451
- * Assignment: Phase 2 - Read MongoDB Data using Node.js
+ * Date: October 26, 2026
+ * Course: IT-302 Advanced Internet Applications, Section 451
+ * Assignment: Phase 3 - CUD MongoDB Data using Node.js
  */
 
 import cors from "cors";
@@ -19,10 +19,12 @@ app.use("/api/v1/st944/observations", observationsRouter);
 
 app.get("/", (_request, response) => {
   response.json({
-    message: "IT-302 Phase 2 iNaturalist Observations API",
+    message: "IT-302 Phase 3 iNaturalist Observations API",
     endpoint: "/api/v1/st944/observations",
   });
 });
+
+app.get("/health", (_request, response) => response.json({ status: "ok" }));
 
 app.use((_request, response) => {
   response.status(404).json({ error: "Route not found" });
@@ -30,7 +32,8 @@ app.use((_request, response) => {
 
 app.use((error, _request, response, _next) => {
   console.error(error);
-  response.status(500).json({ error: "Internal server error" });
+  const status = error.type === "entity.parse.failed" ? 400 : 500;
+  response.status(status).json({ status: "failure", error: status === 400 ? "Invalid JSON request body" : "Internal server error" });
 });
 
 export default app;

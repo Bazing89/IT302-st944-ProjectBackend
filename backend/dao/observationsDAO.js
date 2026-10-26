@@ -1,8 +1,8 @@
 /**
  * Author: Sahith Thopucherla (st944@njit.edu)
- * Date: October 6, 2026
- * Course: IT-302, Section 451
- * Assignment: Phase 2 - Read MongoDB Data using Node.js
+ * Date: October 26, 2026
+ * Course: IT-302 Advanced Internet Applications, Section 451
+ * Assignment: Phase 3 - CUD MongoDB Data using Node.js
  */
 
 let observationsCollection;
@@ -18,6 +18,10 @@ export default class ObservationsDAO {
     observationsCollection = client
       .db(process.env.MONGODB_DB)
       .collection(process.env.MONGODB_COLLECTION);
+  }
+
+  static async getObservationById(observationId) {
+    return observationsCollection.findOne({ observationId });
   }
 
   static async getObservations({ filters = {}, pageNumber = 0, itemsPerPage = 20 } = {}) {

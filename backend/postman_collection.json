@@ -1,14 +1,22 @@
 {
   "info": {
     "_postman_id": "9e1af855-f0cc-4cda-a7b0-0dfac57d76fb",
-    "name": "IT-302 Phase 2 - st944 Observations API",
-    "description": "Sahith Thopucherla | st944@njit.edu | IT-302 Section 451 | Phase 2 | October 6, 2026",
+    "name": "IT-302 Phase 3 - st944 Observations and Comments API",
+    "description": "Sahith Thopucherla | st944@njit.edu | IT-302 Section 451 | Phase 3 | October 26, 2026",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "variable": [
     {
       "key": "baseUrl",
-      "value": "http://localhost:5000/api/v1/st944/observations"
+      "value": "http://localhost:5050/api/v1/st944/observations"
+    },
+    {
+      "key": "commentId",
+      "value": ""
+    },
+    {
+      "key": "observationId",
+      "value": "402264585"
     }
   ],
   "item": [
@@ -43,6 +51,109 @@
         "header": [],
         "url": "{{baseUrl}}?itemsPerPage=10&pageNumber=0&name=bird&qualityGrade=research"
       }
+    },
+    {
+      "name": "Create observation comment",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/comments",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"observationId\": 402264585,\n  \"text\": \"The Green Heron identification is supported by its compact body and long bill.\",\n  \"userName\": \"Sahith Thopucherla\",\n  \"userId\": \"st944\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Created\", () => pm.response.to.have.status(201));",
+              "const data = pm.response.json();",
+              "pm.collectionVariables.set(\"commentId\", data.comment._id);",
+              "pm.test(\"Timestamp exists\", () => pm.expect(data.comment.lastModified).to.be.a(\"string\"));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Update observation comment",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/comments",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"commentId\": \"{{commentId}}\",\n  \"text\": \"The long bill and short neck support the Green Heron identification; a clearer photograph would help confirm the plumage.\",\n  \"userId\": \"st944\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Updated\", () => pm.response.to.have.status(200));",
+              "pm.test(\"Timestamp exists\", () => pm.expect(pm.response.json().comment.lastModified).to.be.a(\"string\"));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Delete observation comment",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/comments",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"commentId\": \"{{commentId}}\",\n  \"userId\": \"st944\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Deleted\", () => pm.expect(pm.response.json().deletedCount).to.eql(1));"
+            ]
+          }
+        }
+      ]
     }
   ]
 }

@@ -29,3 +29,9 @@ GET /api/v1/st944/observations
 Setup, environment variables, Postman URLs, and verification commands are documented in [`backend/README.md`](backend/README.md).
 
 The real `backend/.env` file is intentionally excluded from Git because a MongoDB Atlas connection string may contain credentials. Copy `backend/.env.example` to `backend/.env` and enter the Phase 1 connection string locally.
+
+## Phase 3 — Create, update, and delete comments
+
+Sahith Thopucherla · October 26, 2026 · IT-302 Advanced Internet Applications, Section 451 · st944@njit.edu
+
+Phase 3 adds a separate comments collection and a second controller/DAO to evaluate observations. `POST`, `PUT`, and `DELETE /api/v1/st944/observations/comments` use JSON request bodies. Created and updated comments include a server-generated `lastModified` date. See `backend/README.md` for request examples, tests, exports, Render setup, and submission requirements. `render.yaml` provides the deployment configuration and `database-export/comments_st944.json` contains the local collection export.

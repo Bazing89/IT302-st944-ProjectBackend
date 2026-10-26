@@ -1,14 +1,16 @@
 {
   "name": "it302-st944-project-backend",
-  "version": "2.0.0",
-  "description": "IT-302 Phase 2 REST API for iNaturalist observations stored in MongoDB",
+  "version": "3.0.0",
+  "description": "IT-302 Phase 3 observations and comments MongoDB API",
   "type": "module",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
     "dev": "node --watch index.js",
-    "check": "node --check index.js && node --check server.js && node --check api/observations.route.js && node --check api/observations.controller.js && node --check dao/observationsDAO.js",
-    "test": "node --test"
+    "check": "node --check index.js && node --check server.js && node --check api/observations.route.js && node --check api/observations.controller.js && node --check dao/observationsDAO.js && node --check api/comments.controller.js && node --check dao/commentsDAO.js",
+    "test": "node --test",
+    "export": "node scripts/export-data.js",
+    "seed": "node scripts/seed-data.js"
   },
   "dependencies": {
     "cors": "^2.8.6",
@@ -18,5 +20,8 @@
   },
   "engines": {
     "node": ">=20"
+  },
+  "devDependencies": {
+    "mongodb-memory-server": "^11.3.0"
   }
 }

@@ -1,87 +1,90 @@
-# IT-302 Phase 2 — iNaturalist Observations API
+# IT-302 Phase 3 — Observations and Comments API
 
-- **Student:** Sahith Thopucherla
-- **UCID:** st944
-- **Email:** st944@njit.edu
-- **Course:** IT-302, Section 451
-- **Assignment:** Phase 2 — Read MongoDB Data using Node.js
-**Date:** October 6, 2026
+Sahith Thopucherla · st944@njit.edu · October 26, 2026
+IT-302 Advanced Internet Applications, Section 451
+Assignment: Phase 3 CUD MongoDB Data using Node.js
 
-This MVC-style Node.js backend reads the iNaturalist observation documents imported into MongoDB during Phase 1.
+The Express backend keeps the Phase 2 observation GET endpoint and adds a separate `comments_st944` MongoDB collection. The observation router calls the comments controller, which validates request bodies and delegates persistence to a second DAO. Startup initializes both DAOs.
 
-## Project structure
+## Run locally
 
-```text
-backend/
-├── api/
-│   ├── observations.controller.js
-│   └── observations.route.js
-├── dao/
-│   └── observationsDAO.js
-├── test/
-│   └── helpers.test.js
-├── .env
-├── .env.example
-├── .gitignore
-├── index.js
-├── package.json
-├── postman_collection.json
-└── server.js
+Use Node.js 20 or newer and a running MongoDB server. In `backend`:
+
+```bash
+npm ci
+cp .env.example .env
+# Edit .env with your MongoDB connection details.
+npm run seed
+npm start
 ```
 
-## Setup
+Seeding imports the 25 Phase 1 observations and inserts one realistic comment. Repeating it preserves existing documents. Credentials belong only in `.env` or Render environment variables.
 
-1. Open a terminal in the `backend` folder.
-2. Run `npm install`.
-3. Edit `.env` so `MONGODB_URI`, `MONGODB_DB`, and `MONGODB_COLLECTION` match the Phase 1 database.
-4. Run `npm start`.
-5. The API will run at `http://localhost:5000/api/v1/st944/observations`.
+## HTTP requests
 
-Keep the real `.env` out of GitHub because an Atlas URI can contain a username and password. The safe `.env.example` file documents the required variables.
+Base URL: `http://localhost:5050/api/v1/st944/observations`
 
-## GET parameters
-
-| Parameter | Description | Example |
+| Method | Path | Behavior |
 |---|---|---|
-| `itemsPerPage` | Results per page, from 1 to 100 | `10` |
-| `pageNumber` | Zero-based page number | `0` |
-| `name` | Case-insensitive record/common/scientific-name text filter | `owl` |
-| `speciesName` | Alias for `name` | `owl` |
-| `qualityGrade` | Optional exact quality-grade filter | `research` |
+| GET | `/` | Existing observation list, pagination, and filters |
+| GET | `/comments?observationId=402264585` | List an observation's comments |
+| POST | `/comments` | Create a comment; return 201 and the inserted document |
+| PUT | `/comments` | Update text and lastModified; return the updated document |
+| DELETE | `/comments` | Delete the matching comment; return deletedCount |
 
-## Postman test URLs
+POST body:
 
-All data:
-
-```text
-http://localhost:5000/api/v1/st944/observations
+```json
+{
+  "observationId": 402264585,
+  "text": "The Green Heron identification is supported by its compact body and long bill.",
+  "userName": "Sahith Thopucherla",
+  "userId": "st944"
+}
 ```
 
-Pagination:
+Copy the returned `comment._id` into the PUT and DELETE `commentId` field.
 
-```text
-http://localhost:5000/api/v1/st944/observations?itemsPerPage=10&pageNumber=1
+PUT body:
+
+```json
+{
+  "commentId": "COPY_THE_CREATED_COMMENT_ID",
+  "text": "The long bill and short neck support the Green Heron identification; a clearer photograph would help confirm the plumage.",
+  "userId": "st944"
+}
 ```
 
-Species-name filter:
+DELETE body:
 
-```text
-http://localhost:5000/api/v1/st944/observations?name=owl
+```json
+{
+  "commentId": "COPY_THE_CREATED_COMMENT_ID",
+  "userId": "st944"
+}
 ```
 
-All filters together:
+The server creates MongoDB Date values for `lastModified` on POST and PUT; JSON responses serialize them as ISO timestamps. Invalid bodies return 400. An unknown observation, nonexistent comment, or mismatched user ID returns 404. PUT and DELETE match both comment ID and user ID. The assignment's supplied user ID is not authenticated identity; a production app would need login and authorization.
 
-```text
-http://localhost:5000/api/v1/st944/observations?itemsPerPage=10&pageNumber=0&name=bird&qualityGrade=research
-```
-
-Import `postman_collection.json` into Postman to run all four requests. Capture each result with the complete URL visible, then place the screenshots in a separate ZIP for Canvas.
-
-## Verification
+## Validation and exports
 
 ```bash
 npm run check
 npm test
+npm run export
+postman collection run postman_collection.json --no-report-events
 ```
 
-After testing, commit the project and create the requested Git tag, for example `IT302-Phase2`.
+The integration test starts an isolated real MongoDB server and checks successful creation, updated text and timestamps, invalid inputs, missing observations, user ID mismatches, and deletion. The export command writes complete Extended JSON collections under `database-export` in the repository root.
+
+Import `postman_collection.json` in the Postman desktop application. Run the requests in order: POST saves the returned comment ID into a collection variable for PUT and DELETE. Set `baseUrl` to the deployed Render endpoint when testing remotely.
+
+## Deploy to Render
+
+The root `render.yaml` defines a free Node web service. Connect this repository through Render Blueprints, or create a web service using root directory `backend`, build command `npm ci --omit=dev`, start command `npm start`, and health path `/health`. Render supplies `PORT`.
+
+Set `MONGODB_URI` to a reachable hosted MongoDB connection, `MONGODB_DB=it302`, `MONGODB_COLLECTION=observations_st944`, and `MONGODB_COMMENTS_COLLECTION=comments_st944`. A local `127.0.0.1` URI cannot be used by Render. Import the provided JSON collections into that hosted database or run `npm run seed` locally with its URI in `.env`. Keep database credentials out of Git. Use the actual URL returned by Render; no deployment URL is assumed here.
+
+## Submission checklist
+
+After successful deployment, run POST, PUT, and DELETE from the Postman app against the Render URL. Each screenshot must show the method, full URL including `st944`, request body, and successful response. POST and PUT must show `lastModified`. ZIP these screenshots for attachment to the Canvas text entry, along with the final GitHub tag URL and actual Render URL. Update the JSON export from the hosted database after testing, then commit and tag the final phase.

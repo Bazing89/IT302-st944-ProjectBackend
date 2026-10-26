@@ -1,0 +1,62 @@
+No authorization data found. Please use the `postman login` command.
+Refer:https://learning.postman.com/docs/postman-cli/postman-cli-options/#postman-login
+
+Running your collection...
+postman
+
+IT-302 Phase 3 - st944 Observations and Comments API
+
+Root Get all observations
+
+  GET http://localhost:5050/api/v1/st944/observations [200 OK, 13.41 KB, 28 ms]
+
+Root Get paginated observations
+
+  GET http://localhost:5050/api/v1/st944/observations?itemsPerPage=10&pageNumber=1 [200 OK, 6.88 KB, 3 ms]
+
+Root Filter by species name
+
+  GET http://localhost:5050/api/v1/st944/observations?name=owl [200 OK, 1019 B, 5 ms]
+
+Root Use all filters
+
+  GET http://localhost:5050/api/v1/st944/observations?itemsPerPage=10&pageNumber=0&name=bird&qualityGrade=research [200 OK, 402 B, 3 ms]
+
+Root Create observation comment
+
+  POST http://localhost:5050/api/v1/st944/observations/comments [201 Created, 544 B, 9 ms]
+  Pass  Created
+  Pass  Timestamp exists
+
+Root Update observation comment
+
+  PUT http://localhost:5050/api/v1/st944/observations/comments [200 OK, 582 B, 6 ms]
+  Pass  Updated
+  Pass  Timestamp exists
+
+Root Delete observation comment
+
+  DELETE http://localhost:5050/api/v1/st944/observations/comments [200 OK, 343 B, 2 ms]
+  Pass  Deleted
+
+-------------------------------------------------------------------
+|                         |          executed |            failed |
+--------------------------+-------------------+--------------------
+|              iterations |                 1 |                 0 |
+--------------------------+-------------------+--------------------
+|                requests |                 7 |                 0 |
+--------------------------+-------------------+--------------------
+|            test-scripts |                 3 |                 0 |
+--------------------------+-------------------+--------------------
+|      prerequest-scripts |                 0 |                 0 |
+--------------------------+-------------------+--------------------
+|              assertions |                 5 |                 0 |
+-------------------------------------------------------------------
+| total run duration: 121 ms                                      |
+-------------------------------------------------------------------
+| total data received: 21.27 KB (approx)                          |
+-------------------------------------------------------------------
+| average response time: 8 ms [min: 2 ms, max: 28 ms, s.d.: 8 ms] |
+-------------------------------------------------------------------
+Postman credentials are required for publishing run details to Postman cloud.
+Please specify it by using the `postman login` command

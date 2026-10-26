@@ -1,0 +1,22 @@
+# Sahith Thopucherla | st944@njit.edu | October 26, 2026
+# IT-302 Advanced Internet Applications, Section 451 | Phase 3 CUD MongoDB
+services:
+  - type: web
+    name: st944-it302-observations-backend
+    runtime: node
+    plan: free
+    rootDir: backend
+    buildCommand: npm ci --omit=dev
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_VERSION
+        value: 22.16.0
+      - key: MONGODB_URI
+        sync: false
+      - key: MONGODB_DB
+        value: it302
+      - key: MONGODB_COLLECTION
+        value: observations_st944
+      - key: MONGODB_COMMENTS_COLLECTION
+        value: comments_st944
