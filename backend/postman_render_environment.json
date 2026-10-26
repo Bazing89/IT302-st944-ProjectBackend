@@ -1,0 +1,11 @@
+{
+  "name": "IT302 Phase 3 Render - st944",
+  "values": [
+    {
+      "key": "baseUrl",
+      "value": "https://st944-it302-observations-backend.onrender.com/api/v1/st944/observations",
+      "enabled": true
+    }
+  ],
+  "_postman_variable_scope": "environment"
+}

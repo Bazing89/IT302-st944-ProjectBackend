@@ -1,3 +1,11 @@
+/**
+ * Author: Sahith Thopucherla (st944@njit.edu)
+ * Date: October 26, 2026
+ * Course: IT-302 Advanced Internet Applications, Section 451
+ * Assignment: Phase 3 - CUD MongoDB Data using Node.js
+ * Utility: Refresh the Phase 1 observation dataset when explicitly requested.
+ */
+
 import { mkdir, writeFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";

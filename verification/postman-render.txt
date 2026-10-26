@@ -1,0 +1,62 @@
+No authorization data found. Please use the `postman login` command.
+Refer:https://learning.postman.com/docs/postman-cli/postman-cli-options/#postman-login
+
+Running your collection...
+postman
+
+IT-302 Phase 3 - st944 Observations and Comments API
+
+Root Get all observations
+
+  GET https://st944-it302-observations-backend.onrender.com/api/v1/st944/observations [200 OK, 2.65 KB, 317 ms]
+
+Root Get paginated observations
+
+  GET https://st944-it302-observations-backend.onrender.com/api/v1/st944/observations?itemsPerPage=10&pageNumber=1 [200 OK, 1.73 KB, 137 ms]
+
+Root Filter by species name
+
+  GET https://st944-it302-observations-backend.onrender.com/api/v1/st944/observations?name=owl [200 OK, 920 B, 82 ms]
+
+Root Use all filters
+
+  GET https://st944-it302-observations-backend.onrender.com/api/v1/st944/observations?itemsPerPage=10&pageNumber=0&name=bird&qualityGrade=research [200 OK, 565 B, 81 ms]
+
+Root Create observation comment
+
+  POST https://st944-it302-observations-backend.onrender.com/api/v1/st944/observations/comments [201 Created, 673 B, 102 ms]
+  Pass  Created
+  Pass  Timestamp exists
+
+Root Update observation comment
+
+  PUT https://st944-it302-observations-backend.onrender.com/api/v1/st944/observations/comments [200 OK, 694 B, 71 ms]
+  Pass  Updated
+  Pass  Timestamp exists
+
+Root Delete observation comment
+
+  DELETE https://st944-it302-observations-backend.onrender.com/api/v1/st944/observations/comments [200 OK, 524 B, 71 ms]
+  Pass  Deleted
+
+------------------------------------------------------------------------
+|                         |             executed |              failed |
+--------------------------+----------------------+----------------------
+|              iterations |                    1 |                   0 |
+--------------------------+----------------------+----------------------
+|                requests |                    7 |                   0 |
+--------------------------+----------------------+----------------------
+|            test-scripts |                    3 |                   0 |
+--------------------------+----------------------+----------------------
+|      prerequest-scripts |                    0 |                   0 |
+--------------------------+----------------------+----------------------
+|              assertions |                    5 |                   0 |
+------------------------------------------------------------------------
+| total run duration: 961 ms                                           |
+------------------------------------------------------------------------
+| total data received: 4.54 KB (approx)                                |
+------------------------------------------------------------------------
+| average response time: 123 ms [min: 71 ms, max: 317 ms, s.d.: 82 ms] |
+------------------------------------------------------------------------
+Postman credentials are required for publishing run details to Postman cloud.
+Please specify it by using the `postman login` command

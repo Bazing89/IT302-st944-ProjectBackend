@@ -88,3 +88,9 @@ Set `MONGODB_URI` to a reachable hosted MongoDB connection, `MONGODB_DB=it302`, 
 ## Submission checklist
 
 After successful deployment, run POST, PUT, and DELETE from the Postman app against the Render URL. Each screenshot must show the method, full URL including `st944`, request body, and successful response. POST and PUT must show `lastModified`. ZIP these screenshots for attachment to the Canvas text entry, along with the final GitHub tag URL and actual Render URL. Update the JSON export from the hosted database after testing, then commit and tag the final phase.
+
+## Render service
+
+The free service is live at `https://st944-it302-observations-backend.onrender.com` and uses MongoDB Atlas. The deployed health endpoint and all seven Postman collection requests passed on October 26, 2026. The Postman desktop screenshots show successful POST, PUT, and DELETE requests against this service. Import `postman_render_environment.json` alongside the collection and select that environment to test the deployment.
+
+For local Atlas administration, `.env.atlas` is excluded from Git. Once it contains the real connection URI, run `DOTENV_CONFIG_PATH=.env.atlas npm run seed` and `DOTENV_CONFIG_PATH=.env.atlas npm run export` in `backend`.

@@ -1,0 +1,18 @@
+Sahith Thopucherla — st944
+IT-302 Advanced Internet Applications, Section 451
+Phase 3 CUD MongoDB Data using Node.js
+October 26, 2026
+
+Source code (Phase 3 tag):
+https://github.com/Bazing89/IT302-st944-ProjectBackend/tree/IT302-Phase3
+
+Render website:
+https://st944-it302-observations-backend.onrender.com
+
+Observations API:
+https://st944-it302-observations-backend.onrender.com/api/v1/st944/observations
+
+Comments API (POST, PUT, DELETE):
+https://st944-it302-observations-backend.onrender.com/api/v1/st944/observations/comments
+
+The database-export folder contains the observations and comments JSON exports. The attached ZIP contains screenshots from the Postman desktop application showing successful POST, PUT, and DELETE requests to the deployed Render backend, including request bodies, responses, and lastModified timestamps for POST and PUT.
