@@ -35,3 +35,10 @@ The real `backend/.env` file is intentionally excluded from Git because a MongoD
 Sahith Thopucherla · October 26, 2026 · IT-302 Advanced Internet Applications, Section 451 · st944@njit.edu
 
 Phase 3 adds a separate comments collection and a second controller/DAO to evaluate observations. `POST`, `PUT`, and `DELETE /api/v1/st944/observations/comments` use JSON request bodies. Created and updated comments include a server-generated `lastModified` date. See `backend/README.md` for request examples, tests, exports, Render setup, and submission requirements. `render.yaml` provides the deployment configuration and `database-export/comments_st944.json` contains the local collection export.
+
+## Phase 4 — React observations frontend
+
+The [frontend](frontend/) lists iNaturalist observations, filters by species name,
+and opens a single observation using its MongoDB ID. Run `npm ci` and
+`npm start` from `frontend/`, then open `http://localhost:3000/st944/observations`.
+The frontend uses the existing Render API by default.
