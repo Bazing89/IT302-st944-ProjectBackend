@@ -1,8 +1,8 @@
 /**
  * Author: Sahith Thopucherla (st944@njit.edu)
- * Date: October 26, 2026
+ * Date: November 9, 2026
  * Course: IT-302 Advanced Internet Applications, Section 451
- * Assignment: Phase 3 - CUD MongoDB Data using Node.js
+ * Assignment: Phase 4 - Read Node.js Data using React.js
  */
 
 import assert from "node:assert/strict";
@@ -10,8 +10,11 @@ import test from "node:test";
 import app from "../server.js";
 import ObservationsDAO from "../dao/observationsDAO.js";
 
+const sampleId = "6ab18512513baca43e22936a";
+
 const sampleObservations = [
   {
+    _id: sampleId,
     observationId: 101,
     recordName: "Great Horned Owl observation 101",
     commonName: "Great Horned Owl",
@@ -44,6 +47,9 @@ function createFakeClient() {
   };
 
   const collection = {
+    async findOne({ _id }) {
+      return sampleObservations.find((item) => item._id === _id.toHexString()) ?? null;
+    },
     find() {
       return cursor;
     },
@@ -83,4 +89,18 @@ test("GET endpoint returns the Phase 2 response shape", async (context) => {
   assert.equal(body.totalItems, 2);
   assert.equal(body.totalPages, 1);
   assert.deepEqual(body.filters, { name: "owl" });
+});
+
+test("GET by MongoDB ID distinguishes valid, missing, and malformed records", async (context) => {
+  await ObservationsDAO.injectDB(createFakeClient());
+  const server = app.listen(0, "127.0.0.1");
+  context.after(() => new Promise((resolve) => server.close(resolve)));
+  await new Promise((resolve) => server.once("listening", resolve));
+  const baseUrl = `http://127.0.0.1:${server.address().port}/api/v1/st944/observations/id`;
+
+  const found = await fetch(`${baseUrl}/${sampleId}`);
+  assert.equal(found.status, 200);
+  assert.deepEqual(await found.json(), sampleObservations[0]);
+  assert.equal((await fetch(`${baseUrl}/000000000000000000000000`)).status, 404);
+  assert.equal((await fetch(`${baseUrl}/not-an-id`)).status, 400);
 });

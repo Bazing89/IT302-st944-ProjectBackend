@@ -1,8 +1,8 @@
 /**
  * Author: Sahith Thopucherla (st944@njit.edu)
- * Date: October 26, 2026
+ * Date: November 9, 2026
  * Course: IT-302 Advanced Internet Applications, Section 451
- * Assignment: Phase 3 - CUD MongoDB Data using Node.js
+ * Assignment: Phase 4 - Read Node.js Data using React.js
  */
 
 import express from "express";
@@ -12,6 +12,7 @@ import ObservationsController from "./observations.controller.js";
 const router = express.Router();
 
 router.route("/").get(ObservationsController.apiGetObservations);
+router.get("/id/:id", ObservationsController.apiGetObservation);
 
 // Comments evaluate documents in the original observations collection.
 router.route("/comments")

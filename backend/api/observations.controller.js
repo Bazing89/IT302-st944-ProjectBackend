@@ -1,8 +1,8 @@
 /**
  * Author: Sahith Thopucherla (st944@njit.edu)
- * Date: October 26, 2026
+ * Date: November 9, 2026
  * Course: IT-302 Advanced Internet Applications, Section 451
- * Assignment: Phase 3 - CUD MongoDB Data using Node.js
+ * Assignment: Phase 4 - Read Node.js Data using React.js
  */
 
 import ObservationsDAO from "../dao/observationsDAO.js";
@@ -18,6 +18,24 @@ function parseNonNegativeInteger(value, fallback) {
 }
 
 export default class ObservationsController {
+  static async apiGetObservation(request, response, next) {
+    try {
+      const { id } = request.params;
+      if (!/^[a-f0-9]{24}$/i.test(id)) {
+        return response.status(400).json({ error: "Invalid observation ID." });
+      }
+
+      const observation = await ObservationsDAO.getObservationByMongoId(id);
+      if (!observation) {
+        return response.status(404).json({ error: "Observation not found." });
+      }
+
+      return response.json(observation);
+    } catch (error) {
+      next(error);
+    }
+  }
+
   static async apiGetObservations(request, response, next) {
     try {
       const requestedItemsPerPage = parseNonNegativeInteger(
